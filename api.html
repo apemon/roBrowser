@@ -5,10 +5,8 @@
 		<script type="text/javascript">
 			var ROConfig = {};
 
-			addEventListener('message', function()
-			{
-				return function OnMessage( event )
-				{
+			function OnMessage( event ) {
+				if(event.data.packetver) {
 					removeEventListener( 'message', OnMessage, false );
 
 					ROConfig.grfList          = event.data.grfList          || null;
@@ -45,8 +43,10 @@
 						document.getElementsByTagName('head')[0].appendChild(app);
 						event.source.postMessage('ready', '*' );
 					}
-				};
-			}(), false);
+				}
+			}
+
+			addEventListener('message', OnMessage, false);
 		</script>
 	</head>
 </html>
